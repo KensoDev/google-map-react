@@ -192,6 +192,7 @@ export default class GoogleMap extends Component {
     window.addEventListener('touchmove', this._onTouchMove);
 
     const mapDom = ReactDOM.findDOMNode(this.refs.google_map_dom);
+
     // gmap can't prevent map drag if mousedown event already occured
     // the only workaround I find is prevent mousedown native browser event
     ReactDOM.findDOMNode(this.refs.google_map_dom)
