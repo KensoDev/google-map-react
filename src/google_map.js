@@ -81,6 +81,7 @@ export default class GoogleMap extends Component {
     onZoomAnimationEnd: PropTypes.func,
     onDrag: PropTypes.func,
     onDragEnd: PropTypes.func,
+    onZoomChanged: PropTypes.func,
     options: PropTypes.any,
     distanceToMouse: PropTypes.func,
     hoverDistance: PropTypes.number,
@@ -534,6 +535,8 @@ export default class GoogleMap extends Component {
       overlay.setMap(map);
 
       maps.event.addListener(map, 'zoom_changed', () => {
+        this_._onZoomChanged();
+
         // recalc position at zoom start
         if (this_.geoService_.getZoom() !== map.getZoom()) {
           if (!this_.zoomAnimationInProgress_) {
@@ -633,6 +636,7 @@ export default class GoogleMap extends Component {
         this_.dragTime_ = (new Date()).getTime();
         this_._onDragEnd();
       });
+
     })
     .catch(e => {
       console.error(e); // eslint-disable-line no-console
@@ -662,6 +666,9 @@ export default class GoogleMap extends Component {
 
   _onDragEnd = (...args) => this.props.onDragEnd &&
     this.props.onDragEnd(...args);
+
+  _onZoomChanged = (...args) => this.props.onZoomChanged &&
+    this.props.onZoomChanged(...args);
 
   _onZoomAnimationStart = (...args) => this.props.onZoomAnimationStart &&
     this.props.onZoomAnimationStart(...args)
